@@ -22,10 +22,10 @@ import {
 
 export default function Search() {
   return (
-    <div className='bg-gray-100 dark:bg-gray-900 py-8 px-4 md:px-6'>
-      <div className='max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 md:p-8'>
+    <div className=' dark:bg-gray-900 py-8 px-4 md:px-6'>
+      <div className='max-w-7xl mx-auto bg-white dark:bg-gray-800 rounded-lg  p-6 md:p-8'>
         <h2 className='text-2xl font-bold mb-6'>Find your next adventure</h2>
-        <form className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+        <form className='grid grid-cols-1 md:grid-cols-4 gap-6'>
           <div className='space-y-2'>
             <Label htmlFor='destination'>Going to</Label>
             <Input
@@ -65,9 +65,13 @@ export default function Search() {
               </SelectContent>
             </Select>
           </div>
-          <Button className='col-span-1 md:col-span-3' type='submit'>
-            Search
-          </Button>
+          <div className='space-x-2 '>
+            <Button
+              className='px-20 mt-8 ml-7 bg-blue-700 hover:bg-blue-500'
+              type='submit'>
+              Search
+            </Button>
+          </div>
         </form>
       </div>
     </div>
