@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Text } from "../atoms/Text";
 import { TopDestinationTexts } from "../particles/DataLists";
 import Slider from "react-slick";
@@ -7,7 +7,16 @@ import "slick-carousel/slick/slick-theme.css";
 import { Card } from "../molecules/Card";
 import { Button } from "../atoms/Button";
 import { AirplaneTilt, CaretLeft, CaretRight } from "@phosphor-icons/react";
+import axios from "axios";
 
+import agadir from "../../assets/agadir.png";
+import casablanca from "../../assets/casa.png";
+import fes from "../../assets/fes.png";
+import marrakech from "../../assets/marakesh.png";
+import rabat from "../../assets/rabat.png";
+import tanger from "../../assets/tanger.png";
+import chafchaouen from "../../assets/Chefchaouen.png";
+import essaouira from "../../assets/Essaouira.png";
 
 export default function Destination() {
   const sliderRef = useRef(null);
@@ -61,63 +70,48 @@ export default function Destination() {
     ],
   };
 
-  const itinerary = [
-    {
-      id: 1,
-      title: "Bali, Indonesia",
-      duration: "7 days",
-      image: "bali.jpg",
-      categories: {
-        categoryName: "Beach",
-      },
-    },
-
-    {
-      id: 2,
-      title: "Paris, France",
-      duration: "5 days",
-      image: "paris.jpg",
-      categories: {
-        categoryName: "City",
-      },
-    },
-
-    {
-      id: 3,
-      title: "New York, USA",
-      duration: "3 days",
-      image: "newyork.jpg",
-      categories: {
-        categoryName: "City",
-      },
-    },
-
-    {
-      id: 4,
-      title: "Tokyo, Japan",
-      duration: "5 days",
-      image: "tokyo.jpg",
-      categories: {
-        categoryName: "City",
-      },
-    },
-
-    {
-      id: 5,
-      title: "Venice, Italy",
-      duration: "4 days",
-      image: "venice.jpg",
-      categories: {
-        categoryName: "City",
-      },
-    },
+  const images = [
+    agadir,
+    marrakech,
+    casablanca,
+    fes,
+    rabat,
+    essaouira,
+    tanger,
+    chafchaouen,
+    
   ];
+
+  const [getItinerary, setItinerary] = useState([]);
+
+  const fetchItinerary = async () => {
+    try {
+      const response = await axios.get(
+        "https://hotels-com-provider.p.rapidapi.com/v2/regions",
+        {
+          params: { query: "Maroc", domain: "AE", locale: "en_GB" },
+          headers: {
+            "X-RapidAPI-Key":
+              "adc18f9265msha05378245216634p16ee9fjsnc5363fe7309b",
+            "X-RapidAPI-Host": "hotels-com-provider.p.rapidapi.com",
+          },
+        }
+      );
+      console.log("API response:", response.data.data);
+      setItinerary(response.data.data);
+      console.log("Itinerary:", getItinerary);
+    } catch (error) {
+      console.log("Error fetching itinerary:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchItinerary();
+  }, []);
 
   return (
     <section className='w-full h-auto flex flex-col items-center justify-center relative lg:px-24 md:px-20 px-6 '>
-      <Text
-        as='h2'
-        className='text-3xl font-bold tracking-tight'>
+      <Text as='h2' className='text-3xl font-bold tracking-tight'>
         {TopDestinationTexts.secondText}
       </Text>
 
@@ -140,34 +134,39 @@ export default function Destination() {
       {/* Slides  */}
       <div className='w-full h-auto mt-4'>
         <Slider ref={(slider) => (sliderRef.current = slider)} {...settings}>
-          {itinerary.map((itinerary, index) => (
-            <div key={index} className='md:px-6 px-3'>
-              <Card
-                cardClass='overflow-hidden shadow-md rounded-lg cursor-pointer group'
-                imageAlt={itinerary.image}
-                imageSrc={itinerary.image}
-                imageWrapperClass='w-full h-[250px] overflow-hidden'
-                cover='group-hover:scale-125 transition duration-500 ease'
-                textWrapperClass='flex flex-col gap-4 w-full px-5 py-5'>
-                <div className='flex justify-between items-center'>
-                  <Text as='h4' className='text-base font-medium text-color3'>
-                    {itinerary.title}
-                  </Text>
-                  <Text as='small' className=' text-color3 font-light text-sm'>
-                    {itinerary.duration}
-                  </Text>
-                </div>
-                <div className='w-full flex gap-4 items-center justify-between text-color3'>
-                  <div className='flex gap-4'>
-                    <AirplaneTilt size={20} color='currentColor' />
-                    <Text as='p' className=' text-color3 font-light text-base'>
-                      {/* {itinerary.categories.categoryName} */}
+          {getItinerary &&
+            getItinerary.slice(1, 9).map((itinerary, index) => (
+              <div key={index} className='md:px-6 px-3'>
+                <Card
+                  cardClass='overflow-hidden shadow-md rounded-lg  cursor-pointer group'
+                  imageAlt={images[index]}
+                  imageSrc={images[index]}
+                  imageWrapperClass='w-full h-[200px] overflow-hidden'
+                  cover='group-hover:scale-125 transition duration-500 ease'
+                  textWrapperClass='flex flex-col gap-4 w-full px-5 py-5'>
+                  <div className='flex justify-between items-center'>
+                    <Text as='h4' className='text-base font-medium text-color3'>
+                      {itinerary.hierarchyInfo.country.name}
+                    </Text>
+                    <Text
+                      as='small'
+                      className=' text-color3 font-light text-sm'>
+                      {itinerary.duration}
                     </Text>
                   </div>
-                </div>
-              </Card>
-            </div>
-          ))}
+                  <div className='w-full flex gap-4 items-center justify-between text-color3'>
+                    <div className='flex gap-4'>
+                      <AirplaneTilt size={20} color='currentColor' />
+                      <Text
+                        as='p'
+                        className=' text-color3 font-light text-base'>
+                        {itinerary.regionNames.primaryDisplayName}
+                      </Text>
+                    </div>
+                  </div>
+                </Card>
+              </div>
+            ))}
         </Slider>
       </div>
     </section>
