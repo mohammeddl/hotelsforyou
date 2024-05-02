@@ -12,10 +12,7 @@ export default function Discover() {
     <section className='w-full pb-12'>
       <div className='container grid gap-10 px-4 md:px-6'>
         <div className='grid gap-4'>
-          <h2 className='text-3xl font-bold tracking-tight'>Filter Products</h2>
-          <p className='text-gray-500 dark:text-gray-400'>
-            Refine your search by selecting from the available filters.
-          </p>
+          <h2 className='text-3xl font-bold tracking-tight'>Discover your new favourite stay</h2>
         </div>
         <Carousel
           className='w-full max-w-full'

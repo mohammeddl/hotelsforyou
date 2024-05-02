@@ -23,9 +23,9 @@ import {
 export default function Search() {
   return (
     <div className=' dark:bg-gray-900 py-8 px-4 md:px-6'>
-      <div className='max-w-7xl mx-auto bg-white dark:bg-gray-800 rounded-lg  p-6 md:p-8'>
+      <div className='max-w-8xl  bg-white dark:bg-gray-800 rounded-lg mx-7  p-6 md:p-8'>
         <h2 className='text-2xl font-bold mb-6'>Find your next adventure</h2>
-        <form className='grid grid-cols-1 md:grid-cols-4 gap-6'>
+        <form className='grid grid-cols-1 md:grid-cols-4 gap-14'>
           <div className='space-y-2'>
             <Label htmlFor='destination'>Going to</Label>
             <Input
