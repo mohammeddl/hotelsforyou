@@ -4,6 +4,7 @@ import { createBrowserRouter } from "react-router-dom";
 import GuestLayout from "../layouts/GuestLayout";
 import Home from "../pages/Home";
 import Dashboard from "../pages/Dashboard";
+import AdminLayout from "../layouts/AdminLayout";
 
 
 export const dashboard = "/dashboard";
@@ -19,10 +20,10 @@ export const router = createBrowserRouter([
         ],
     },
     {
-        element: <GuestLayout />,
+        element: <AdminLayout />,
         children: [
             {
-                path: "/dashboard",
+                path: dashboard,
                 element: <Dashboard />,
             },
         ],
