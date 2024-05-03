@@ -79,7 +79,6 @@ export default function Destination() {
     essaouira,
     tanger,
     chafchaouen,
-    
   ];
 
   const [getItinerary, setItinerary] = useState([]);
@@ -105,12 +104,15 @@ export default function Destination() {
     }
   };
 
+  
+
   useEffect(() => {
+    getData();
     fetchItinerary();
   }, []);
 
   return (
-    <section className='w-full h-auto flex flex-col items-center justify-center relative lg:px-24 md:px-20 px-6 '>
+    <section className='w-full h-auto flex flex-col items-center justify-center relative pb-6 lg:px-24 md:px-20 px-6 '>
       <Text as='h2' className='text-3xl font-bold tracking-tight'>
         {TopDestinationTexts.secondText}
       </Text>
