@@ -107,7 +107,7 @@ export default function Destination() {
   
 
   useEffect(() => {
-    getData();
+    
     fetchItinerary();
   }, []);
 
